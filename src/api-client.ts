@@ -28,15 +28,16 @@ export class ApiClient {
 
   async duplicateIssue(
     originalIssue: Issue,
-    repository: Repository
+    owner: String,
+    repo: String
   ): Promise<{
     readonly id: string
     readonly url: string
   }> {
     // https://docs.github.com/en/rest/issues/issues#create-an-issue
     const {data: createdIssue} = await this.rest.issues.create({
-      owner: repository.owner.login,
-      repo: repository.name,
+      owner: owner,
+      repo: repo,
       title: originalIssue.title,
       body: originalIssue.body ?? undefined,
       milestone: originalIssue.milestone?.number,
