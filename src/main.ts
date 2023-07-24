@@ -20,7 +20,7 @@ function filterDuplicateCommandEvent(
     )
   }
 
-  return event.comment.body.trim() === COMMAND ? event : null
+  return event
 }
 
 async function duplicateIssueWithProjectFields(
