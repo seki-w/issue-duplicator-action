@@ -1,6 +1,6 @@
 # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
 
-name: Issue Duplicator
+name: copy issue
 description: Duplicate an issue with labels, assignees, milestone, and GitHub project custom fields
 author: Masaya Nakamura (@mashabow)
 
