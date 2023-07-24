@@ -65,7 +65,7 @@ async function run(): Promise<void> {
     const event = filterDuplicateCommandEvent(github.context)
     if (!event) return
 
-    const apiClient = new ApiClient(core.getInput('github-token'))
+    const apiClient = new ApiClient(core.getInput('githubToken'))
     const repos = core.getInput('targetRepositories', {required: true}).split(',')
     
     await duplicateIssueWithProjectFields(apiClient, repos, event)
