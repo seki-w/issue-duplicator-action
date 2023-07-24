@@ -28,6 +28,8 @@ async function duplicateIssueWithProjectFields(
 ): Promise<void> {
   for (const repo of repos) {
     core.info(`Original issue: ${event.issue.html_url}`)
+    core.info(`owner: ${event.repository.owner.login}`)
+    core.info(`repo: ${repo}`)
     const newIssue = await apiClient.duplicateIssue(event.issue, event.repository.owner.login, repo)
     core.info(`Issue created: ${newIssue.url}`)
     core.debug('newIssue:')
