@@ -26,8 +26,8 @@ export class ApiClient {
 
   async duplicateIssue(
     originalIssue: Issue,
-    owner: String,
-    repo: String
+    owner: string,
+    repo: string
   ): Promise<{
     readonly id: string
     readonly url: string
