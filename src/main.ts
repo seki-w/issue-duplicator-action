@@ -4,8 +4,6 @@ import {ApiClient} from './api-client'
 import {Context} from '@actions/github/lib/context'
 import type {IssueCommentEvent} from '@octokit/webhooks-types'
 
-const COMMAND = event.comment.body.trim()
-
 function filterDuplicateCommandEvent(
   context: Context
 ): IssueCommentEvent | null {
@@ -49,7 +47,7 @@ async function duplicateIssueWithProjectFields(
   
     await apiClient.updateIssueComment(
       event.comment.node_id,
-      `${COMMAND} 👉 ${newIssue.url}`
+      `${event.comment.body.trim()} 👉 ${newIssue.url}`
     )
   }
   
