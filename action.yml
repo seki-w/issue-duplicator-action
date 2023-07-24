@@ -11,9 +11,6 @@ inputs:
   targetRepositories:
     description: 'Repository to which generated issue is copied. format: $OWNER/$REPO_NAME'
     required: true
-  keyword:
-    description: 'Keyword to trigger this action. The action is executed in the case of lowercased issue comment matched with lowercased keyword.'
-    default: '/copy'
 
 runs:
   using: node16
