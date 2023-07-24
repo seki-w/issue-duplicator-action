@@ -4,7 +4,7 @@ import {ApiClient} from './api-client'
 import {Context} from '@actions/github/lib/context'
 import type {IssueCommentEvent} from '@octokit/webhooks-types'
 
-const COMMAND = '/duplicate'
+const COMMAND = event.comment.body.trim()
 
 function filterDuplicateCommandEvent(
   context: Context
