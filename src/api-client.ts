@@ -17,13 +17,11 @@ type Project = {
 export class ApiClient {
   private readonly rest: ReturnType<typeof github.getOctokit>['rest']
   private readonly graphql: Sdk
-  private readonly repos: string[]
 
-  constructor(token: string, repos: string[]) {
+  constructor(token: string) {
     const octokit = github.getOctokit(token)
     this.rest = octokit.rest
     this.graphql = getSdk(octokit.graphql)
-    this.repos = repos
   }
 
   async duplicateIssue(
