@@ -5,7 +5,7 @@ description: Duplicate an issue with labels, assignees, milestone, and GitHub pr
 author: Masaya Nakamura (@mashabow)
 
 inputs:
-  github-token:
+  githubToken:
     description: A GitHub personal access token with write access to the repo and the project
     required: true
   targetRepositories:
