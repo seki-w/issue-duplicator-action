@@ -61,7 +61,9 @@ async function run(): Promise<void> {
     if (!event) return
 
     const apiClient = new ApiClient(core.getInput('github-token'))
-    await duplicateIssueWithProjectFields(apiClient, event)
+    const repos = core.getInput('targetRepositories', {required: true}).split(',')
+    
+    await duplicateIssueWithProjectFields(apiClient, repos, event)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
