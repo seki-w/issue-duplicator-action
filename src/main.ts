@@ -25,30 +25,35 @@ function filterDuplicateCommandEvent(
 
 async function duplicateIssueWithProjectFields(
   apiClient: ApiClient,
+  repos: string[],
   event: IssueCommentEvent
 ): Promise<void> {
-  core.info(`Original issue: ${event.issue.html_url}`)
-  const newIssue = await apiClient.duplicateIssue(event.issue, event.repository)
-  core.info(`Issue created: ${newIssue.url}`)
-  core.debug('newIssue:')
-  core.debug(JSON.stringify(newIssue, null, 2))
-
-  const projects = await apiClient.getProjectFieldValues(event.issue.node_id)
-  for (const project of projects) {
-    const itemId = await apiClient.addIssueToProject(newIssue.id, project.id)
-    core.info(`Added issue to project: ${project.url}`)
-    core.debug(`itemId: ${itemId}`)
-
-    for (const field of project.fields) {
-      await apiClient.setProjectFieldValue(project.id, itemId, field)
-      core.info(`- Set field value: ${field.name}`)
+  for (const repo of repos) {
+    core.info(`Original issue: ${event.issue.html_url}`)
+    const newIssue = await apiClient.duplicateIssue(event.issue, event.repository.owner.login, repo)
+    core.info(`Issue created: ${newIssue.url}`)
+    core.debug('newIssue:')
+    core.debug(JSON.stringify(newIssue, null, 2))
+    
+    const projects = await apiClient.getProjectFieldValues(event.issue.node_id)
+    for (const project of projects) {
+      const itemId = await apiClient.addIssueToProject(newIssue.id, project.id)
+      core.info(`Added issue to project: ${project.url}`)
+      core.debug(`itemId: ${itemId}`)
+  
+      for (const field of project.fields) {
+        await apiClient.setProjectFieldValue(project.id, itemId, field)
+        core.info(`- Set field value: ${field.name}`)
+      }
     }
+  
+    await apiClient.updateIssueComment(
+      event.comment.node_id,
+      `${COMMAND} 👉 ${newIssue.url}`
+    )
   }
+  
 
-  await apiClient.updateIssueComment(
-    event.comment.node_id,
-    `${COMMAND} 👉 ${newIssue.url}`
-  )
   core.info('Successfully duplicated.')
 }
 
